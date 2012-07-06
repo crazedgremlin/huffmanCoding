@@ -23,14 +23,62 @@
 
         </style>
 
-        <script src="huffman.js"></script>
+        <script src="Integer.js"></script>
+        <script src="Bitstring.js"></script>
+        <script src="PriorityQueue.js"></script>
+        <script src="Package.js"></script>
+        <script src="Huffman.js"></script>
+        
+        
+        <script>
+            window.onload = function() {
+                
+                // Get the main divs
+                var toBeCompressedDiv = document.getElementById('compressMe');
+                var compressedDiv = document.getElementById('compressed');
+                var uncompressedDiv = document.getElementById('uncompressed');
+                var statsDiv = document.getElementById('statistics');
+
+                
+                // get input text
+                var text = toBeCompressedDiv.innerHTML;
+            
+                
+                // compress and uncompress the text
+                var huffmanObj = new Huffman();
+                var ans = huffmanObj.huffmanDemo(text);
+                
+                
+                // display the results and statistics
+                compressedDiv.innerHTML = ans.packedBitstring;
+                uncompressedDiv.innerHTML = ans.uncompressed;
+            
+                var origSize = text.length;
+                var newSize = ans.packedBitstring.numBits / 8;
+                var compression = (100.*newSize/origSize) + '%';
+                var statsStr = origSize + " bytes -> " + newSize + " bytes" +
+                    "<br>" +
+                    "Compressed to " + compression + " of original size";
+                statsDiv.innerHTML = statsStr;
+                
+            }
+        </script>
+        
     </head>
 
     <body>
-        <div id="compressMe">
-        ABAAAAAABAAAAAABAAAABBBCC
+        <h1>Huffman Coding Demo</h1>
+<pre>
+Dan McArdle
+7/6/12
+</pre>
+
+        <h2>Statistics</h2>
+        <div id="statistics">
         </div>
-        <div id="compressMe2">
+
+        <h2>Input Text</h2>
+        <div id="compressMe">
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel feugiat neque. Donec felis lectus, consequat quis consequat vitae, venenatis non libero. Integer eleifend semper est, nec dictum lectus sagittis eget. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin pellentesque scelerisque dui quis iaculis. Mauris laoreet auctor arcu vel facilisis. Fusce eu mi odio, quis fringilla arcu. Sed volutpat turpis sit amet orci faucibus molestie. Ut placerat nulla vitae diam dapibus mattis. Praesent at erat lectus. Nulla sed pulvinar tortor. Nam quam ipsum, interdum ac iaculis id, vehicula id erat.
 </p>
@@ -50,11 +98,14 @@ In convallis, quam at accumsan consequat, odio orci sollicitudin odio, sed porta
 <p>
 Quisque interdum, nisl non ultricies imperdiet, purus diam tempor magna, ac mattis metus nisl id tortor. Sed adipiscing interdum leo, id ultrices sem porta pellentesque. Duis risus nunc, fringilla nec volutpat eget, viverra ac sem. Phasellus iaculis laoreet arcu, ut cursus tellus auctor eu. Sed vehicula dapibus nisi sed ullamcorper. Mauris non magna felis, at fringilla nisl. Integer ultricies convallis laoreet. Phasellus scelerisque orci a tellus sollicitudin faucibus. Aliquam pellentesque euismod turpis at egestas. Praesent ante dui, sodales in vulputate eu, scelerisque eget metus. Maecenas dignissim auctor volutpat. Nunc ut eros enim, vel commodo nibh. Nullam in lorem justo, eu vestibulum sem. 
 </p>
+
         </div>
 
+        <h2>Compressed Representation</h2>
         <div id="compressed">
         </div>
 
+        <h2>Decompressed Text</h2>
         <div id="uncompressed">
         </div>
 

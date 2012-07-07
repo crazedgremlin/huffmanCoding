@@ -1,9 +1,13 @@
+// Static functions for packing and unpacking integers
+
 Integer = {};
+Integer.BITS_PER_INT = 32;
+
 Integer.unpack = function(num) {
     var i;
     var bit;
     var bits = [];
-    for (i=0; i<BITS_PER_INT; i++) {
+    for (i=0; i<Integer.BITS_PER_INT; i++) {
         bit = num & 1;
         bits.push(bit);
         num >>= 1;
@@ -16,7 +20,7 @@ Integer.pack = function(bitsArr) {
     var i;
     var packing = 0;
     
-    for (i=0; i<BITS_PER_INT; i++) {
+    for (i=0; i<Integer.BITS_PER_INT; i++) {
         packing <<= 1;
         packing |= bitsArr[i];
     }

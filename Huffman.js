@@ -12,8 +12,6 @@ Dan McArdle
 
 */
 
-var BITS_PER_INT = 32;
-
 function Huffman() {
     
     this.huffmanDemo = function(text) {
@@ -133,20 +131,32 @@ function Huffman() {
         return table;
     }
 
+    // Generate the Binary Huffman Tree from the frequency table
     this.generateTree = function(freq) {
-        var q = new PriorityQueue();
+
+        var q = new PriorityQueue('prob');
         var c;
         var i;
 
-        // create a leaf node for each symbol, add to priority queue
+        // Data type used by the priority queue
+        function Node(character, prob) {
+            this.c = character;
+            this.prob = prob;
+            this.left = null;
+            this.right = null;
+        }
+        
+
+        // Create a leaf node for each symbol, add to priority queue
         for (i=0; i<freq.length; i++) {
             var f = freq[i];
             var leaf = new Node(f.character, f.frequency);
             q.push(leaf);
         }
 
-
+        // Iteratively create tree
         while (q.length() > 1) {
+
             // remove two nodes
             var a = q.pop();
             var b = q.pop();
@@ -161,13 +171,19 @@ function Huffman() {
             q.push(newNode);
         }
 
+        // Last node standing is the root
         var root = q.pop();
+
         console.log(root);
         
         return root;
     }
 
+
+    // Create an array such that
+    //    array[character] = characterCount
     this.generateFreqTable = function(text) {
+
         // count the occurrences of each character in text
         var counter = [];
         var i;
@@ -200,5 +216,4 @@ function Huffman() {
 
         return sorted;
     }
-
 }

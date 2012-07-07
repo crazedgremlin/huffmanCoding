@@ -1,25 +1,24 @@
 
-// Data type used by the queue
-function Node(character, prob) {
-    this.c = character;
-    this.prob = prob;
-    this.left = null;
-    this.right = null;
-}
+// Define a priority queue which pops the item with the lowest value
+// contained in the 'field' attribute.
 
+function PriorityQueue(field) {
 
-// Define a priority queue which pops the item with the lowest prob value.
-function PriorityQueue() {
     this.list = [];
-    
+    this.field = field;
+
+    // dynamically return list length
     this.length = function() {
         return this.list.length;
     }
     
+    // where the item is pushed doesn't matter because we're finding the min
+    // when we pop
     this.push = function(item) {
         this.list.push(item);
     }
     
+    // find the item with the minimum field attribute
     this.pop = function(item) {
         var item;
         var minItem;
@@ -29,7 +28,7 @@ function PriorityQueue() {
             item = this.list[i];
             minItem = this.list[minIndex];
             
-            if (item.prob < minItem.prob) {
+            if (item[this.field] < minItem[this.field]) {
                 minIndex = i;
             }
         }
@@ -41,6 +40,9 @@ function PriorityQueue() {
         return item[0];
     }
     
+
+
+    // tests if this data structure is working as expected
     this.test = function() {
         function assertEqual(experimental, expected, strDesc) {
             if (!strDesc) {
@@ -57,7 +59,7 @@ function PriorityQueue() {
         
         // define datatype with freq
         function Test(freq) {
-            this.prob = freq;
+            this[this.field] = freq;
         }
         
         this.push(new Test(1));
@@ -66,10 +68,10 @@ function PriorityQueue() {
         this.push(new Test(3));
     
         
-        assertEqual( this.pop().prob, 0 );
-        assertEqual( this.pop().prob, 1 );
-        assertEqual( this.pop().prob, 2 );
-        assertEqual( this.pop().prob, 3 );
+        assertEqual( this.pop()[this.field], 0 );
+        assertEqual( this.pop()[this.field], 1 );
+        assertEqual( this.pop()[this.field], 2 );
+        assertEqual( this.pop()[this.field], 3 );
     }
 }
 

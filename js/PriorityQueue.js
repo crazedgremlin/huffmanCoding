@@ -57,9 +57,9 @@ function PriorityQueue(field) {
             }
         }
         
-        // define datatype with freq
-        function Test(freq) {
-            this[this.field] = freq;
+        // define datatype with value
+        function Test(value) {
+            this[this.field] = value;
         }
         
         this.push(new Test(1));
